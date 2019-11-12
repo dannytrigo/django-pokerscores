@@ -1,4 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
+import {Event} from '../api/types';
 
 @Component({
   selector: 'app-eventoverview',
@@ -27,5 +28,14 @@ export class EventoverviewComponent implements OnInit {
     if (status === 'C') { return 'Confirmed'; }
     if (status === 'X') { return 'Cancelled'; }
     if (status === 'F') { return 'Finished'; }
+  }
+
+  isPastYear() {
+    const today = new Date();
+    const eventDate = new Date(this.event.date);
+    console.log(today);
+    console.log(eventDate);
+    return eventDate.getFullYear() < today.getFullYear();
+
   }
 }

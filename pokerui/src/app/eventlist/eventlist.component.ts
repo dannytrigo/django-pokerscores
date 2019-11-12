@@ -54,7 +54,7 @@ export class EventlistComponent implements OnInit {
 
     const EventQuery = gql`
         {
-          events(leagueId: 1, first: 10) {
+          events(leagueId: 1, first: 100) {
             id
             date
             status

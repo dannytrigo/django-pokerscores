@@ -47,6 +47,21 @@ export class EventdetailsComponent implements OnInit {
               }
               attendance
             }
+            gameSet {
+              id
+              stake
+              number
+              gameplayerSet {
+                id
+                player {
+                  id
+                  nickname
+                }
+                position
+                winnings
+                rebuys
+              }
+            }
           }
         }
       `;
