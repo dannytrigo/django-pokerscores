@@ -1,0 +1,118 @@
+import graphene
+from graphene_django.types import DjangoObjectType, ObjectType
+from .models import League, Profile, User, Event, EventPlayer, Game, GamePlayer
+
+
+class LeagueType(DjangoObjectType):
+    class Meta:
+        model = League
+
+
+class ProfileType(DjangoObjectType):
+    class Meta:
+        model = Profile
+
+
+class UserType(DjangoObjectType):
+    class Meta:
+        model = User
+
+
+class EventType(DjangoObjectType):
+    class Meta:
+        model = Event
+
+
+class EventPlayerType(DjangoObjectType):
+    class Meta:
+        model = EventPlayer
+
+class GameType(DjangoObjectType):
+    class Meta:
+        model = Game
+
+
+class GamePlayerType(DjangoObjectType):
+    class Meta:
+        model = GamePlayer
+
+
+class Query(ObjectType):
+    league = graphene.Field(LeagueType, id=graphene.Int())
+    profile = graphene.Field(ProfileType, id=graphene.Int())
+    user = graphene.Field(UserType, id=graphene.Int())
+    event = graphene.Field(EventType, id=graphene.Int())
+    #eventplayer = graphene.Field(EventPlayerType, id=graphene.Int())
+    game = graphene.Field(GameType, id=graphene.Int())
+    gameplayer = graphene.Field(GamePlayerType, id=graphene.Int())
+
+    leagues = graphene.List(LeagueType)
+    profiles = graphene.List(ProfileType)
+    users = graphene.List(UserType)
+    events = graphene.List(EventType, league_id=graphene.Int(), first=graphene.Int())
+    games = graphene.List(GameType, event_id=graphene.Int(), first=graphene.Int())
+    gameplayers = graphene.List(GamePlayerType, game_id=graphene.Int())
+
+    def resolve_league(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return League.objects.get(pk=id)
+        return None
+
+    def resolve_profile(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return Profile.objects.get(pk=id)
+        return None
+
+    def resolve_user(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return User.objects.get(pk=id)
+        return None
+
+    def resolve_event(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return Event.objects.get(pk=id)
+        return None
+
+    def resolve_game(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return Game.objects.get(pk=id)
+        return None
+
+    def resolve_gameplayer(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return GamePlayer.objects.get(pk=id)
+        return None
+
+    def resolve_leagues(self, info):
+        return League.objects.all()
+
+    def resolve_profiles(self, info):
+        return Profile.objects.all()
+
+    def resolve_users(self, info):
+        return User.objects.all()
+
+    def resolve_events(self, info, league_id, first=None):
+        print()
+        events = Event.objects.filter(league__id=league_id).order_by('-date')
+        if first:
+            events = events[:first]
+        return events
+
+    def resolve_games(self, info, event_id, first=None):
+        games = Game.objects.filter(event__id=event_id)
+        if first:
+            games = games[:first]
+        return games
+
+    def resolve_gameplayers(self, info, game_id):
+        return GamePlayer.objects.filter(game__id=game_id)
+
+
+schema = graphene.Schema(query=Query)

@@ -1,0 +1,46 @@
+<div routerLink="/events/{{event.id}}" class="card">
+  <div class="card-body">
+    <div class="row">
+      <div class="col-2 align-items-center">
+              <span title="{{ event.date }}">
+              <span style="display:block; text-align:center; color:#fa3e3e">{{ event.date | date:'MMM' | uppercase }}</span>
+              <span style="display:block; text-align:center">{{ event.date | date:'d' }} </span>
+              </span>
+      </div>
+      <div class="col-10">
+        <div class="col">
+          <div class="row">
+            <div class="col">Host: {{ event.host.nickname }}</div>
+            <div class="col">Status: {{ status_text(event.status) }}</div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <div ngbDropdown class="d-inline-block">
+                Going: <button class="btn btn-outline-primary" id="dropdownAttendingList" ngbDropdownToggle>{{filter_players(['AT', 'AD'], event.eventplayerSet)?.length}} players</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownAttendingList">
+                  <div *ngFor="let player of filter_players(['AT', 'AD'], event.eventplayerSet)">
+                    <button ngbDropdownItem *ngIf="['AT', 'AD'].includes(player.attendance)">{{player.player.nickname}}</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">Interested: ...</div>
+          </div>
+          <div class="row">
+            <div class="col-11"></div>
+            <div class="col">
+              <div ngbDropdown class="d-inline-block float-right">
+                <button class="btn btn-outline-primary" id="dropdownAttending" ngbDropdownToggle><fa-icon [icon]="faCheckCircle"></fa-icon> Interested</button>
+                <div ngbDropdownMenu aria-labelledby="dropdownAttending">
+                  <button ngbDropdownItem>Attending!</button>
+                  <button ngbDropdownItem>Interested</button>
+                  <button ngbDropdownItem>Not attending</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

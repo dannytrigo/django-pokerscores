@@ -6,12 +6,58 @@ from django.core import serializers
 from django.http import HttpResponse
 from rest_framework import viewsets
 
-from .serializers import UserSerializer, GroupSerializer, LeagueSerializer, ProfileSerializer
-from .models import League, Profile
+from .serializers import UserSerializer, GroupSerializer, LeagueSerializer, ProfileSerializer, EventSerializer, \
+    GameSerializer, GamePlayerSerializer
+from .models import League, Profile, Event, Game, GamePlayer
+
+import jwt, json
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
-    return HttpResponse("Hello, world. You're at the API index.")
+    return HttpResponse('<p>Hello, world. You''re at the API index.</p><a href="{% url "social:begin" "google-oauth2" %}">Google+</a>')
+
+
+@csrf_exempt
+def login(request):
+    if request.method == 'POST':
+        try:
+            username = request.POST['username']
+            password = request.POST['password']
+            print(username)
+            print(password)
+            user = User.objects.get(username=username)
+            valid = user.check_password(password)
+            if not valid:
+                raise Exception('Invalid password')
+        except:
+            return HttpResponse(json.dumps({'Error': "Invalid username/password"}),
+                                status=400,
+                                content_type="application/json"
+                                )
+        if user:
+            payload = {
+                'id': user.id,
+                'username': user.username,
+                #'nickname':
+                'email': user.email,
+            }
+            j = jwt.encode(payload, "SECRET_KEY", algorithm='HS256')
+            print(j)
+            jwt_token = {'token': j.decode('utf-8')}
+            print(payload)
+            print(jwt_token)
+
+            return HttpResponse(
+                json.dumps(jwt_token),
+                status=200,
+                content_type="application/json"
+            )
+        else:
+            return HttpResponse(json.dumps({'Error': "Invalid username/password"}),
+                                status=400,
+                                content_type="application/json"
+                                )
 
 
 def leagues_list(request):
@@ -22,7 +68,10 @@ def leagues_list(request):
 
 
 def leagues_get(request, league_id):
-    return HttpResponse("You're looking at league %s." % league_id)
+    league = League.objects.get(id=league_id)
+    output = serializers.serialize("json", league)
+    return HttpResponse(output)
+    # return HttpResponse("You're looking at league %s." % league_id)
 
 
 def leagues_users_list(request, league_id):
@@ -56,9 +105,25 @@ class LeagueViewSet(viewsets.ModelViewSet):
     queryset = League.objects.all()
     serializer_class = LeagueSerializer
 
+
 class ProfileViewSet(viewsets.ModelViewSet):
     """
     API endpoint that allows profiles to be viewed or edited.
     """
     queryset = Profile.objects.all()
     serializer_class = ProfileSerializer
+
+
+class EventViewSet(viewsets.ModelViewSet):
+    queryset = Event.objects.all()
+    serializer_class = EventSerializer
+
+
+class GameViewSet(viewsets.ModelViewSet):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+
+
+class GamePlayerViewSet(viewsets.ModelViewSet):
+    queryset = GamePlayer.objects.all()
+    serializer_class = GamePlayerSerializer

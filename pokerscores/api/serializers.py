@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
-from .models import League, Profile
+from .models import League, Profile, Event, Game, GamePlayer
 
 
 class UserSerializer(serializers.HyperlinkedModelSerializer):
@@ -19,7 +19,7 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
 class ProfileSingleSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Profile
-        fields = ('id',)
+        fields = ('id')
 
 
 class LeagueSingleSerializer(serializers.HyperlinkedModelSerializer):
@@ -37,9 +37,29 @@ class LeagueSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class ProfileSerializer(serializers.HyperlinkedModelSerializer):
-    leagues = LeagueSingleSerializer(many=True, read_only=True)
     user = UserSerializer()
 
     class Meta:
         model = Profile
-        fields = ('id', 'user', 'leagues')
+        fields = ('id', 'user',)
+
+
+class EventSerializer(serializers.HyperlinkedModelSerializer):
+    host = ProfileSerializer()
+
+    class Meta:
+        model = Event
+
+        fields = ('id', 'date', 'host')
+
+
+class GameSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Game
+        fields = ('id', 'event', 'number', 'stake')
+
+
+class GamePlayerSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = GamePlayer
+        fields = ('id', 'position', 'rebuys')
