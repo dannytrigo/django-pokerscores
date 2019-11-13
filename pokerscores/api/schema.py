@@ -42,7 +42,7 @@ class Query(ObjectType):
     profile = graphene.Field(ProfileType, id=graphene.Int())
     user = graphene.Field(UserType, id=graphene.Int())
     event = graphene.Field(EventType, id=graphene.Int())
-    #eventplayer = graphene.Field(EventPlayerType, id=graphene.Int())
+    eventplayer = graphene.Field(EventPlayerType, id=graphene.Int())
     game = graphene.Field(GameType, id=graphene.Int())
     gameplayer = graphene.Field(GamePlayerType, id=graphene.Int())
 
@@ -50,6 +50,7 @@ class Query(ObjectType):
     profiles = graphene.List(ProfileType)
     users = graphene.List(UserType)
     events = graphene.List(EventType, league_id=graphene.Int(), first=graphene.Int())
+    eventplayers = graphene.List(EventPlayerType, event_id=graphene.Int())
     games = graphene.List(GameType, event_id=graphene.Int(), first=graphene.Int())
     gameplayers = graphene.List(GamePlayerType, game_id=graphene.Int())
 
@@ -77,6 +78,11 @@ class Query(ObjectType):
             return Event.objects.get(pk=id)
         return None
 
+    def resolve_eventplayer(self, info, **kwargs):
+        id = kwargs.get('id')
+        if id is not None:
+            return EventPlayer.objects.get(pk=id)
+
     def resolve_game(self, info, **kwargs):
         id = kwargs.get('id')
         if id is not None:
@@ -99,11 +105,16 @@ class Query(ObjectType):
         return User.objects.all()
 
     def resolve_events(self, info, league_id, first=None):
-        print()
+        print(info.context.user)
+        print(info.context.user.is_authenticated)
         events = Event.objects.filter(league__id=league_id).order_by('-date')
         if first:
             events = events[:first]
         return events
+
+    def resolve_eventplayers(self, info, event_id):
+        eventplayers = EventPlayer.objects.filter(event__id=event_id)
+        return eventplayers
 
     def resolve_games(self, info, event_id, first=None):
         games = Game.objects.filter(event__id=event_id)

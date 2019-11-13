@@ -1,4 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
+import { faHourglassHalf, faCheckCircle, faTimesCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle as faCheckCircleReg } from '@fortawesome/free-regular-svg-icons';
 import {Event} from '../api/types';
 
 @Component({
@@ -8,7 +10,21 @@ import {Event} from '../api/types';
 })
 export class EventoverviewComponent implements OnInit {
 
-  constructor() { }
+  constructor() {}
+
+  faProposed = faHourglassHalf;
+  faConfirmed = faCheckCircleReg;
+  faCancelled = faTimesCircle;
+  faFinished = faCheckCircle;
+
+  getEventIcon(event) {
+    switch (event.status) {
+      case 'P': return this.faProposed;
+      case 'C': return this.faConfirmed;
+      case 'X': return this.faCancelled;
+      case 'F': return this.faFinished;
+    }
+  }
 
   @Input()
   event: Event;

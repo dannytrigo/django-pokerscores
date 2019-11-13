@@ -4,6 +4,8 @@ import gql from 'graphql-tag';
 import {ActivatedRoute} from '@angular/router';
 import {Apollo} from 'apollo-angular';
 
+import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+
 @Component({
   selector: 'app-eventdetails',
   templateUrl: './eventdetails.component.html',
@@ -19,6 +21,8 @@ export class EventdetailsComponent implements OnInit {
   eventId: number;
   event: Event;
   sub: any;
+
+  faTrophy = faTrophy;
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -91,6 +95,12 @@ export class EventdetailsComponent implements OnInit {
     if (status === 'F') { return 'Finished'; }
   }
 
-
+  isPastYear() {
+    const today = new Date();
+    const eventDate = new Date(this.event.date);
+    console.log(today);
+    console.log(eventDate);
+    return eventDate.getFullYear() < today.getFullYear();
+  }
 
 }

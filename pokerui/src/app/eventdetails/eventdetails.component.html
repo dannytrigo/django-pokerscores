@@ -4,10 +4,16 @@
   </div>
 </div>
 <div class="row">
+  <div class="col">
+    <h2>Details</h2>
+  </div>
+</div>
+<div class="row">
   <div class="col-2 align-items-center">
     <span title="{{ event.date }}">
       <span style="display:block; text-align:center; color:#fa3e3e">{{ event.date | date:'MMM' | uppercase }}</span>
       <span style="display:block; text-align:center">{{ event.date | date:'d' }} </span>
+      <span style="display:block; text-align:center" *ngIf="isPastYear()">{{ event.date | date: 'yyyy' }}</span>
     </span>
   </div>
   <div class="col-10">
@@ -19,7 +25,7 @@
       <div class="row">
         <div class="col">
           <div ngbDropdown class="d-inline-block">
-            Going: <button class="btn btn-outline-primary" id="dropdownAttendingList" ngbDropdownToggle>{{filter_players(['AT', 'AD'], event.eventplayerSet)?.length}} players</button>
+            Players: <button class="btn btn-outline-primary" id="dropdownAttendingList" ngbDropdownToggle>{{filter_players(['AT', 'AD'], event.eventplayerSet)?.length}} players</button>
             <div ngbDropdownMenu aria-labelledby="dropdownAttendingList">
               <div *ngFor="let player of filter_players(['AT', 'AD'], event.eventplayerSet)">
                 <button ngbDropdownItem *ngIf="['AT', 'AD'].includes(player.attendance)">{{player.player.nickname}}</button>
@@ -27,11 +33,12 @@
             </div>
           </div>
         </div>
-        <div class="col">Interested: ...</div>
+        <!--<div class="col">Interested: ...</div>-->
       </div>
       <div class="row">
         <div class="col-11"></div>
         <div class="col">
+          <!--
           <div ngbDropdown class="d-inline-block float-right">
             <button class="btn btn-outline-primary" id="dropdownAttending" ngbDropdownToggle><fa-icon [icon]="faCheckCircle"></fa-icon> Interested</button>
             <div ngbDropdownMenu aria-labelledby="dropdownAttending">
@@ -40,21 +47,40 @@
               <button ngbDropdownItem>Not attending</button>
             </div>
           </div>
+          -->
         </div>
       </div>
-      <div class="row" *ngFor="let game of event.gameSet">
-        <div class="col">
-          <p>Game {{ game.number}}</p>
-        </div>
-        <div class="col">
-          Stake: ${{ game.stake }}
-        </div>
-        <div class="col">
-          <ul>
-            <li *ngFor="let player of game.gameplayerSet">{{player.player.nickname}} - {{ player.position }} - ${{ player.winnings }}</li>
-          </ul>
-        </div>
-      </div>
+    </div>
+  </div>
+</div>
+<div *ngIf="event.gameSet.length > 0" class="row">
+  <div class="col">
+    <h2>Games</h2>
+  </div>
+</div>
+<div *ngFor="let game of event.gameSet">
+  <div class="row">
+    <div class="col">
+      <h4># {{ game.number}}</h4>
+    </div>
+    <div class="col">
+      Stake: ${{ game.stake }}
+    </div>
+  </div>
+  <div class="row" *ngFor="let player of game.gameplayerSet">
+    <div class="col">
+      {{player.player.nickname}}
+    </div>
+    <div class="col">
+      <span *ngIf="player.position == 1"><fa-icon style="color:goldenrod" [icon]="faTrophy" size="lg"></fa-icon>1st!</span>
+      <span *ngIf="player.position == 2"><fa-icon style="color:silver" [icon]="faTrophy" size="lg"></fa-icon>2nd!</span>
+      <span *ngIf="player.position == 3"><fa-icon style="color:darkgoldenrod" [icon]="faTrophy" size="lg"></fa-icon>3rd!</span>
+    </div>
+    <div class="col">
+      <span *ngIf="player.winnings > 0">${{ player.winnings }}</span>
+    </div>
+    <div class="col">
+      <span *ngIf="player.rebuys > 0">({{ player.rebuys }} rebuys)</span>
     </div>
   </div>
 </div>

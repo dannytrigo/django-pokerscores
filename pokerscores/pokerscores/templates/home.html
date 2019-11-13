@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <title>Pokerui</title>
+  <title>Poker Party Tracker</title>
   <base href="/">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -10,8 +10,9 @@
 <body>
   {% if user.is_authenticated %}
     <p>Welcome {{ user.username }}</p>
+    <p><a href="/logout/">Logout</a></p>
   {% else %}
-    <a href="/login/google-oauth2/">Log in with Google</a>
+    <p><a href="/login/google-oauth2/">Log in with Google</a></p>
   {% endif %}
   <app-root></app-root>
   <script src="/static/ang/runtime.js" type="module"></script>
