@@ -31,4 +31,5 @@ export interface GamePlayer {
   position: number;
   winnings: number;
   rebuys: number;
+  game: Game[];
 }

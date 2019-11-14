@@ -103,4 +103,22 @@ export class EventdetailsComponent implements OnInit {
     return eventDate.getFullYear() < today.getFullYear();
   }
 
+  comparePosition(player1, player2) {
+    if (player1.position == player2.position) {
+      return 0
+    } else if (player1.position == 0) {
+      return 1;
+    } else if (player2.position == 0) {
+      return -1;
+    } else {
+      return (player1.position < player2.position ? -1 : 1);
+    }
+  }
+
+  playersOrderedByWinner(players) {
+    const sorted = players.sort(this.comparePosition);
+    console.log('sorted');
+    console.log(sorted);
+    return sorted;
+  }
 }

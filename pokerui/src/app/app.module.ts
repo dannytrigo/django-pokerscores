@@ -12,6 +12,7 @@ import { GraphQLModule } from './graphql.module';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EventoverviewComponent } from './eventoverview/eventoverview.component';
 import { EventdetailsComponent } from './eventdetails/eventdetails.component';
+import { PlayerdetailsComponent } from './playerdetails/playerdetails.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { EventdetailsComponent } from './eventdetails/eventdetails.component';
     NavbarComponent,
     EventlistComponent,
     EventoverviewComponent,
-    EventdetailsComponent
+    EventdetailsComponent,
+    PlayerdetailsComponent
   ],
   imports: [
     BrowserModule,

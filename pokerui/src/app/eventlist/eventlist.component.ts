@@ -26,8 +26,6 @@ export class EventlistComponent implements OnInit {
       return null;
     }
     const today = new Date();
-    console.log(today);
-    console.log(this.events);
     return this.events.filter(x => Date.parse(x.date).valueOf() >= today.valueOf());
   }
 
@@ -36,15 +34,12 @@ export class EventlistComponent implements OnInit {
       return null;
     }
     const today = new Date();
-    console.log(today);
-    console.log(this.events);
     return this.events.filter(x => Date.parse(x.date).valueOf() < today.valueOf());
   }
 
   ngOnInit() {
     console.log('init');
     // this.httpClient.get('http://127.0.0.1:8000/api/events/').subscribe((data) => {
-    //  console.log(data);
     //  this.events = data;
     // });
 

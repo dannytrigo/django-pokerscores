@@ -52,7 +52,7 @@ class Query(ObjectType):
     events = graphene.List(EventType, league_id=graphene.Int(), first=graphene.Int())
     eventplayers = graphene.List(EventPlayerType, event_id=graphene.Int())
     games = graphene.List(GameType, event_id=graphene.Int(), first=graphene.Int())
-    gameplayers = graphene.List(GamePlayerType, game_id=graphene.Int())
+    gameplayers = graphene.List(GamePlayerType, game_id=graphene.Int(), player_id=graphene.Int())
 
     def resolve_league(self, info, **kwargs):
         id = kwargs.get('id')
@@ -122,8 +122,12 @@ class Query(ObjectType):
             games = games[:first]
         return games
 
-    def resolve_gameplayers(self, info, game_id):
-        return GamePlayer.objects.filter(game__id=game_id)
+    def resolve_gameplayers(self, info, game_id=None, player_id=None):
+        if game_id:
+            return GamePlayer.objects.filter(game__id=game_id)
+        elif player_id:
+            return GamePlayer.objects.filter(player__id=player_id)
+        return None
 
 
 schema = graphene.Schema(query=Query)

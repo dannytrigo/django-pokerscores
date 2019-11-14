@@ -8,12 +8,6 @@
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
 <body>
-  {% if user.is_authenticated %}
-    <p>Welcome {{ user.username }}</p>
-    <p><a href="/logout/">Logout</a></p>
-  {% else %}
-    <p><a href="/login/google-oauth2/">Log in with Google</a></p>
-  {% endif %}
   <app-root></app-root>
   <script src="/static/ang/runtime.js" type="module"></script>
   <script src="/static/ang/polyfills.js" type="module"></script>

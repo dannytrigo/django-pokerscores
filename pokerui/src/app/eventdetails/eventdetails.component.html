@@ -28,7 +28,7 @@
             Players: <button class="btn btn-outline-primary" id="dropdownAttendingList" ngbDropdownToggle>{{filter_players(['AT', 'AD'], event.eventplayerSet)?.length}} players</button>
             <div ngbDropdownMenu aria-labelledby="dropdownAttendingList">
               <div *ngFor="let player of filter_players(['AT', 'AD'], event.eventplayerSet)">
-                <button ngbDropdownItem *ngIf="['AT', 'AD'].includes(player.attendance)">{{player.player.nickname}}</button>
+                <button ngbDropdownItem *ngIf="['AT', 'AD'].includes(player.attendance)" routerLink="/profile/{{player.player.id}}">{{player.player.nickname}}</button>
               </div>
             </div>
           </div>
@@ -58,29 +58,31 @@
     <h2>Games</h2>
   </div>
 </div>
-<div *ngFor="let game of event.gameSet">
-  <div class="row">
-    <div class="col">
-      <h4># {{ game.number}}</h4>
+<div class="row">
+  <div class="col-12 col-lg-6" *ngFor="let game of event.gameSet">
+    <div class="row">
+      <div class="col">
+        <h4># {{ game.number}}</h4>
+      </div>
+      <div class="col">
+        <h5>Stake: ${{ game.stake }}</h5>
+      </div>
     </div>
-    <div class="col">
-      Stake: ${{ game.stake }}
-    </div>
-  </div>
-  <div class="row" *ngFor="let player of game.gameplayerSet">
-    <div class="col">
-      {{player.player.nickname}}
-    </div>
-    <div class="col">
-      <span *ngIf="player.position == 1"><fa-icon style="color:goldenrod" [icon]="faTrophy" size="lg"></fa-icon>1st!</span>
-      <span *ngIf="player.position == 2"><fa-icon style="color:silver" [icon]="faTrophy" size="lg"></fa-icon>2nd!</span>
-      <span *ngIf="player.position == 3"><fa-icon style="color:darkgoldenrod" [icon]="faTrophy" size="lg"></fa-icon>3rd!</span>
-    </div>
-    <div class="col">
-      <span *ngIf="player.winnings > 0">${{ player.winnings }}</span>
-    </div>
-    <div class="col">
-      <span *ngIf="player.rebuys > 0">({{ player.rebuys }} rebuys)</span>
+    <div class="row" *ngFor="let player of playersOrderedByWinner(game.gameplayerSet)" routerLink="/profile/{{player.player.id}}">
+      <div class="col">
+        {{player.player.nickname}}
+      </div>
+      <div class="col">
+        <span *ngIf="player.position == 1"><fa-icon style="color:goldenrod" [icon]="faTrophy" size="lg"></fa-icon>1st!</span>
+        <span *ngIf="player.position == 2"><fa-icon style="color:silver" [icon]="faTrophy" size="lg"></fa-icon>2nd!</span>
+        <span *ngIf="player.position == 3"><fa-icon style="color:darkgoldenrod" [icon]="faTrophy" size="lg"></fa-icon>3rd!</span>
+      </div>
+      <div class="col">
+        <span *ngIf="player.winnings > 0">${{ player.winnings }}</span>
+      </div>
+      <div class="col">
+        <span *ngIf="player.rebuys > 0">({{ player.rebuys }} rebuys)</span>
+      </div>
     </div>
   </div>
 </div>

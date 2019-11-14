@@ -49,8 +49,6 @@ export class EventoverviewComponent implements OnInit {
   isPastYear() {
     const today = new Date();
     const eventDate = new Date(this.event.date);
-    console.log(today);
-    console.log(eventDate);
     return eventDate.getFullYear() < today.getFullYear();
 
   }

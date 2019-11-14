@@ -20,6 +20,17 @@ def index(request):
 
 @csrf_exempt
 def login(request):
+    print('login!')
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            profile = Profile.objects.get(user=request.user)
+            return HttpResponse(json.dumps({'authenticated': True,
+                                            'username': request.user.username,
+                                            'nickname': profile.nickname,
+                                            }),
+                                content_type='application/json')
+        else:
+            return HttpResponse(json.dumps({'authenticated': False}), content_type='application/json', status=401)
     if request.method == 'POST':
         try:
             username = request.POST['username']
