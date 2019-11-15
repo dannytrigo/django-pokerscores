@@ -31,16 +31,18 @@
         <div ngbDropdown class="d-inline-block">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-4" data-toggle="dropdown"
            aria-haspopup="true" aria-expanded="false" ngbDropdownToggle>
-          <fa-icon [icon]="faUser"></fa-icon> {{ authSvc.nickname }} </a>
+          <fa-icon [icon]="faUser"></fa-icon> {{ authSvc.nickname }}
+        </a>
+
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4" ngbDropdownMenu >
           <div *ngIf="authSvc.isUserLoggedIn === true">
-            <a class="dropdown-item">My account</a>
-            <a class="dropdown-item" [routerLink]="['/profile/', authSvc.profileId]">My statistics</a>
-            <a class="dropdown-item" *ngIf="authSvc.isSuperuser" href="/admin/">Admin</a>
-            <a class="dropdown-item" href="/views/logout/">Log out</a>
+            <button class="dropdown-item">My account</button>
+            <button class="dropdown-item" [routerLink]="['/profile/', authSvc.profileId]" ngbDropdownItem>My statistics</button>
+            <button class="dropdown-item" *ngIf="authSvc.isSuperuser" onclick="window.location.href='/admin/'" ngbDropdownItem>Admin</button>
+            <button onclick="window.location.href='/views/logout/'" ngbDropdownItem>Log out</button>
           </div>
           <div *ngIf="!authSvc.isUserLoggedIn">
-            <a class="dropdown-item" href="/login/google-oauth2/">Log in with Google</a>
+            <button onclick="window.location.href='/login/google-oauth2/'" ngbDropdownItem>Log in with Google</button>
           </div>
         </div>
         </div>
