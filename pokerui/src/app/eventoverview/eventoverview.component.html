@@ -11,7 +11,10 @@
       <div class="col-9">
         <div class="col">
           <div class="row">
-            <div class="col-10">Host: {{ event.host.nickname }}</div>
+            <div class="col-8">Host: {{ event.host.nickname }}</div>
+            <div class="col-2">
+              <img *ngIf="event.host.hasAvatar" style="height:32px;width=32px;border-radius: 50%;max-height:100%;max-width:100%" src="/views/avatar/{{event.host.id}}/">
+            </div>
             <div class="col-2">
               <fa-icon style="color:darkgreen" [icon]="getEventIcon(event)" size="2x"></fa-icon>
             </div>

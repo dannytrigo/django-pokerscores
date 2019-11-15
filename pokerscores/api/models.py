@@ -20,6 +20,9 @@ class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     leagues = models.ManyToManyField(League)
     nickname = models.TextField()
+    avatar = models.BinaryField(null=True, blank=True)
+    def has_avatar(self):
+        return self.avatar is not None
 
     def __str__(self):
         return str(self.user.username)
@@ -48,6 +51,8 @@ class Event(models.Model):
     host = models.ForeignKey(Profile, on_delete=models.CASCADE)
     date = models.DateField()
     status = models.CharField(max_length=2, choices=EventStatusChoices)
+    min_players = models.IntegerField(default=3)
+    max_players = models.IntegerField(default=9)
 
     def __str__(self):
         return str('%s : %s' % (str(self.date), str(self.host)))

@@ -21,9 +21,11 @@ export class PlayerdetailsComponent implements OnInit {
   firstPlaces: number;
   secondPlaces: number;
   thirdPlaces: number;
+  hasAvatar: boolean;
 
   profileId: number;
   sub: any;
+
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
@@ -42,6 +44,7 @@ export class PlayerdetailsComponent implements OnInit {
     query GetProfile($id: Int!) {
       profile(id: $id) {
         nickname
+        hasAvatar
       }
     }`;
 
@@ -100,6 +103,7 @@ export class PlayerdetailsComponent implements OnInit {
     }).valueChanges.subscribe(({data}) => {
       console.log(data);
       this.nickname = data.profile.nickname;
+      this.hasAvatar = data.profile.hasAvatar;
     });
   }
 

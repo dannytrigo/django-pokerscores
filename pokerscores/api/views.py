@@ -76,6 +76,10 @@ def login(request):
                                 content_type="application/json"
                                 )
 
+def avatar(request, profile_id):
+    profile = Profile.objects.get(id=profile_id)
+    print(len(profile.avatar))
+    return HttpResponse(profile.avatar, content_type='image/jpeg')
 
 def leagues_list(request):
     leagues = League.objects.order_by('-id')

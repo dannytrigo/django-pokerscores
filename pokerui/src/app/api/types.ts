@@ -1,6 +1,7 @@
 export interface Person {
   id: number;
   nickname: string;
+  hasAvatar: boolean;
 }
 
 export interface Event {
@@ -31,5 +32,5 @@ export interface GamePlayer {
   position: number;
   winnings: number;
   rebuys: number;
-  game: Game[];
+  game: Game;
 }

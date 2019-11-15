@@ -32,7 +32,7 @@ export class AuthService {
         console.log(data);
         console.log(this.isSuperuser);
         this.isUserLoggedIn = true;
-        this.router.navigateByUrl('events');
+        // this.router.navigateByUrl('events');
       }
     });
   }

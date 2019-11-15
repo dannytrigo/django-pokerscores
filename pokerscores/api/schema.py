@@ -9,8 +9,10 @@ class LeagueType(DjangoObjectType):
 
 
 class ProfileType(DjangoObjectType):
+    has_avatar = graphene.Boolean(source='has_avatar')
     class Meta:
         model = Profile
+        exclude = ('avatar', )
 
 
 class UserType(DjangoObjectType):
@@ -53,6 +55,18 @@ class Query(ObjectType):
     eventplayers = graphene.List(EventPlayerType, event_id=graphene.Int())
     games = graphene.List(GameType, event_id=graphene.Int(), first=graphene.Int())
     gameplayers = graphene.List(GamePlayerType, game_id=graphene.Int(), player_id=graphene.Int())
+
+    def auth_check(func):
+        def wrapper_auth(*args, **kwargs):
+            print(*args)
+            print(**kwargs)
+            info = kwargs['info']
+            if not info.context.user.is_authenticated:
+                return None
+            else:
+                func(*args, **kwargs)
+        return wrapper_auth
+
 
     def resolve_league(self, info, **kwargs):
         id = kwargs.get('id')

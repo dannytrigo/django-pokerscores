@@ -15,7 +15,7 @@ export class NavbarComponent implements OnInit {
   isNavbarCollapsed = true;
 
   ngOnInit() {
-    console.log(authSvc.isUserLoggedIn)
+    console.log(this.authSvc.isUserLoggedIn)
   }
 
 }

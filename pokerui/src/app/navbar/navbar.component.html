@@ -34,7 +34,7 @@
           <fa-icon [icon]="faUser"></fa-icon> {{ authSvc.nickname }} </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-info" aria-labelledby="navbarDropdownMenuLink-4" ngbDropdownMenu >
           <div *ngIf="authSvc.isUserLoggedIn === true">
-            <a class="dropdown-item" href="#">My account</a>
+            <a class="dropdown-item">My account</a>
             <a class="dropdown-item" [routerLink]="['/profile/', authSvc.profileId]">My statistics</a>
             <a class="dropdown-item" *ngIf="authSvc.isSuperuser" href="/admin/">Admin</a>
             <a class="dropdown-item" href="/views/logout/">Log out</a>

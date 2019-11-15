@@ -56,6 +56,7 @@ export class EventlistComponent implements OnInit {
             host {
               id
               nickname
+              hasAvatar
             }
             eventplayerSet {
               id
