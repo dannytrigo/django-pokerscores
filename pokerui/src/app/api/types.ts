@@ -11,6 +11,8 @@ export interface Event {
   host: Person;
   eventplayerSet: EventPlayer[];
   gameSet: Game[];
+  maxPlayers: number;
+  minPlayers: number;
 }
 
 export interface EventPlayer {

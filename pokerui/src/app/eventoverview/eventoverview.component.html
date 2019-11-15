@@ -22,12 +22,13 @@
           <div class="row">
             <div class="col">
               <div ngbDropdown class="d-inline-block">
-                Players: <button class="btn btn-outline-primary" id="dropdownAttendingList" ngbDropdownToggle>{{filter_players(['AT', 'AD'], event.eventplayerSet)?.length}} players</button>
+                Players: {{filter_players(['AT', 'AD'], event.eventplayerSet)?.length}}<span *ngIf="event.status == 'C' || event.status == 'P'"> / {{event.maxPlayers}}</span>
+                <!--<button class="btn btn-outline-primary" id="dropdownAttendingList" ngbDropdownToggle>{{filter_players(['AT', 'AD'], event.eventplayerSet)?.length}} players</button>
                 <div ngbDropdownMenu aria-labelledby="dropdownAttendingList">
                   <div *ngFor="let player of filter_players(['AT', 'AD'], event.eventplayerSet)">
                     <button ngbDropdownItem *ngIf="['AT', 'AD'].includes(player.attendance)">{{player.player.nickname}}</button>
                   </div>
-                </div>
+                </div>-->
               </div>
             </div>
             <!--<div class="col">Interested: ...</div>-->

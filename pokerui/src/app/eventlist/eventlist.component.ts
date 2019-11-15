@@ -66,6 +66,8 @@ export class EventlistComponent implements OnInit {
               }
               attendance
             }
+            maxPlayers
+            minPlayers
           }
         }
       `;
