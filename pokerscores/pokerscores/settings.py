@@ -25,7 +25,7 @@ SECRET_KEY = '1x9go=w#3a=%b(5lvpvncta3s=c!i0)_=knu4wf=f20%d=(lq#'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['192.168.1.2', '127.0.0.1', 'dannytrigo.strangled.net']
+ALLOWED_HOSTS = ['192.168.1.2', '127.0.0.1', 'dannytrigo.strangled.net', 'pokerparty.azurewebsites.net']
 
 
 # Application definition
