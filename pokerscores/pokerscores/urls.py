@@ -39,7 +39,8 @@ router.register(r'events', EventViewSet)
 router.register(r'games', GameViewSet)
 router.register(r'gameplayers', GamePlayerViewSet)
 
-urlpatterns = [
+urlpatterns = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
+[
     path('', include('social_django.urls', namespace='social')),
     # url(r'^', include(router.urls)),
     url(r'^views/', include('api.urls')),
@@ -48,4 +49,4 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
     url(r'^.*', TemplateView.as_view(template_name='home.html'), name='home')
-]#'+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
