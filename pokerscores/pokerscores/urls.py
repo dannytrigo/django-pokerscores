@@ -41,7 +41,6 @@ router.register(r'gameplayers', GamePlayerViewSet)
 
 urlpatterns = [
     path('', include('social_django.urls', namespace='social')),
-    path('logout/', auth_logout, {'next_page': '/'}, name='logout'),
     # url(r'^', include(router.urls)),
     url(r'^views/', include('api.urls')),
     url(r'^api/', include(router.urls)),

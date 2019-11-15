@@ -2,8 +2,9 @@
 from __future__ import unicode_literals
 
 from django.contrib.auth.models import User, Group
+from django.contrib.auth.views import auth_logout
 from django.core import serializers
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from rest_framework import viewsets
 
 from .serializers import UserSerializer, GroupSerializer, LeagueSerializer, ProfileSerializer, EventSerializer, \
@@ -17,6 +18,9 @@ from django.views.decorators.csrf import csrf_exempt
 def index(request):
     return HttpResponse('<p>Hello, world. You''re at the API index.</p><a href="{% url "social:begin" "google-oauth2" %}">Google+</a>')
 
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect('/')
 
 @csrf_exempt
 def login(request):
@@ -27,6 +31,8 @@ def login(request):
             return HttpResponse(json.dumps({'authenticated': True,
                                             'username': request.user.username,
                                             'nickname': profile.nickname,
+                                            'profileId': profile.id,
+                                            'is_superuser': request.user.is_superuser,
                                             }),
                                 content_type='application/json')
         else:

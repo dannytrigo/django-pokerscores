@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -8,12 +9,13 @@ import { faUser } from '@fortawesome/free-solid-svg-icons';
 })
 export class NavbarComponent implements OnInit {
 
-  constructor() { }
+  constructor(public authSvc: AuthService) { }
 
   faUser = faUser;
   isNavbarCollapsed = true;
 
   ngOnInit() {
+    console.log(authSvc.isUserLoggedIn)
   }
 
 }

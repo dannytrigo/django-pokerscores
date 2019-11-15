@@ -3,13 +3,6 @@
 
 
 <div class="container">
-  <div *ngIf="auth.isUserLoggedIn">
-    <p>Welcome {{ auth?.username }}</p>
-    <p><a href="/logout/">Logout</a></p>
-  </div>
-  <div *ngIf="!auth.isUserLoggedIn">
-    <p><a href="/login/google-oauth2/">Log in with Google</a></p>
-  </div>
   <app-navbar></app-navbar>
   <div class="row">
     <div class="col">

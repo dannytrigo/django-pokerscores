@@ -13,6 +13,8 @@ export class AuthService {
   isUserLoggedIn = false;
   username: string;
   nickname: string;
+  profileId: number;
+  isSuperuser: boolean;
 
   login() {
     this.http.get('/views/login/', {observe: 'response'}).subscribe((data: any) => {
@@ -25,6 +27,10 @@ export class AuthService {
         console.log('Authenticated');
         this.username = (data.body as any).username;
         this.nickname = (data.body as any).nickname;
+        this.profileId = (data.body as any).profileId;
+        this.isSuperuser = (data.body as any).is_superuser;
+        console.log(data);
+        console.log(this.isSuperuser);
         this.isUserLoggedIn = true;
         this.router.navigateByUrl('events');
       }
