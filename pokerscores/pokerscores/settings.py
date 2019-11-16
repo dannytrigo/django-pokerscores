@@ -161,11 +161,12 @@ STATIC_URL = '/static/'
 
 import os.path
 
-STATIC_ROOT = ''
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+print(STATIC_ROOT)
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = ( os.path.join('static'), )
+STATICFILES_DIRS = ( os.path.join(BASE_DIR, '..', 'pokerui', 'build'),
+                     os.path.join(BASE_DIR, 'pokerscores', 'static'))
 
 if DEBUG:
     import mimetypes

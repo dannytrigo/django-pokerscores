@@ -1,1 +1,1 @@
-ng build --watch --output-hashing none --output-path ..\pokerscores\static\ang --prod
+ng build --watch --output-hashing none --output-path .\build\ang --prod
