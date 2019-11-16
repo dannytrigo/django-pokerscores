@@ -28,6 +28,7 @@ from django.contrib.auth.views import auth_logout
 
 from api.models import League, Profile
 from api.views import UserViewSet, GroupViewSet, LeagueViewSet, ProfileViewSet, EventViewSet, GameViewSet, GamePlayerViewSet
+from pokerscores.views import angular_home
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
@@ -40,13 +41,13 @@ router.register(r'games', GameViewSet)
 router.register(r'gameplayers', GamePlayerViewSet)
 
 urlpatterns = static(settings.STATIC_URL, document_root=settings.STATIC_ROOT) + \
-[
-    path('', include('social_django.urls', namespace='social')),
-    # url(r'^', include(router.urls)),
-    url(r'^views/', include('api.urls')),
-    url(r'^api/', include(router.urls)),
-    url(r'^api-doc/', include('rest_framework.urls')),
-    url(r'^admin/', admin.site.urls),
-    path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
-    url(r'^.*', TemplateView.as_view(template_name='home.html'), name='home')
-]
+    [
+        path('', include('social_django.urls', namespace='social')),
+        # url(r'^', include(router.urls)),
+        url(r'^views/', include('api.urls')),
+        url(r'^api/', include(router.urls)),
+        url(r'^api-doc/', include('rest_framework.urls')),
+        url(r'^admin/', admin.site.urls),
+        path('graphql/', csrf_exempt(GraphQLView.as_view(graphiql=True))),
+        url(r'^.*', angular_home, name='angular_home')
+    ]

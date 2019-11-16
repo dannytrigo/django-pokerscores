@@ -15,9 +15,9 @@ export interface Event {
   minPlayers: number;
 }
 
-export interface EventPlayer {
+export class EventPlayer {
   id: number;
-  Player: Person;
+  player: Person;
   attendance: string;
 }
 

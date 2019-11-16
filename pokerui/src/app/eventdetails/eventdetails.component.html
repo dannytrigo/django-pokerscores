@@ -35,19 +35,21 @@
         </div>
         <!--<div class="col">Interested: ...</div>-->
       </div>
-      <div class="row">
-        <div class="col-11"></div>
+      <div *ngIf="authSvc.isUserLoggedIn && (event.status == 'P' || event.status == 'C')" class="row">
+        <div class="col-10"></div>
         <div class="col">
-          <!--
           <div ngbDropdown class="d-inline-block float-right">
-            <button class="btn btn-outline-primary" id="dropdownAttending" ngbDropdownToggle><fa-icon [icon]="faCheckCircle"></fa-icon> Interested</button>
+            <button class="btn btn-outline-primary" id="dropdownAttending" ngbDropdownToggle>
+              <span *ngIf="myEventPlayer.attendance=='NA' || myEventPlayer.attendance=='IN'">Interested</span>
+              <span *ngIf="myEventPlayer.attendance=='AT'">Attending!</span>
+              <span *ngIf="myEventPlayer.attendance=='NI'">Not attending</span>
+            </button>
             <div ngbDropdownMenu aria-labelledby="dropdownAttending">
-              <button ngbDropdownItem>Attending!</button>
-              <button ngbDropdownItem>Interested</button>
-              <button ngbDropdownItem>Not attending</button>
+              <button (click)="setAttendance('AT')" ngbDropdownItem>Attending!</button>
+              <button (click)="setAttendance('IN')" ngbDropdownItem>Interested</button>
+              <button (click)="setAttendance('NI')" ngbDropdownItem>Not attending</button>
             </div>
           </div>
-          -->
         </div>
       </div>
     </div>

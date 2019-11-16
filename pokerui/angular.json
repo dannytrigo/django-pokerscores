@@ -27,6 +27,7 @@
               "src/favicon.ico",
               "src/assets"
             ],
+            "deployUrl": "/static/ang/",
             "styles": [
               "src/styles.scss"
             ],

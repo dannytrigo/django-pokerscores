@@ -143,5 +143,27 @@ class Query(ObjectType):
             return GamePlayer.objects.filter(player__id=player_id)
         return None
 
+class UpdateEventAttendance(graphene.Mutation):
+    class Arguments:
+        # The input arguments for this mutation
+        eventId = graphene.Int(required=True)
+        attendance = graphene.String(required=True)
 
-schema = graphene.Schema(query=Query)
+    eventPlayer = graphene.Field(EventPlayerType)
+
+    @staticmethod
+    def mutate(root, info, eventId, attendance):
+        if info.context.user.is_authenticated:
+            event = Event.objects.get(id=eventId)
+            try:
+                ep = EventPlayer.objects.get(event=event, player=info.context.user.profile)
+            except EventPlayer.DoesNotExist:
+                ep = EventPlayer(event__id=event, player=info.context.user.profile)
+            ep.attendance = attendance
+            ep.save()
+            return UpdateEventAttendance(eventPlayer=ep)
+
+class Mutation(graphene.ObjectType):
+    updateEventAttendance = UpdateEventAttendance.Field()
+
+schema = graphene.Schema(query=Query, mutation=Mutation)

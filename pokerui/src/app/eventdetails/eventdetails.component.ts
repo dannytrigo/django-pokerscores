@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {Event} from '../api/types';
+import {Event, EventPlayer} from '../api/types';
 import gql from 'graphql-tag';
 import {ActivatedRoute} from '@angular/router';
 import {Apollo} from 'apollo-angular';
 
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-eventdetails',
@@ -15,12 +16,15 @@ import { faTrophy } from '@fortawesome/free-solid-svg-icons';
 export class EventdetailsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
-              private apollo: Apollo) { }
+              private apollo: Apollo,
+              public authSvc: AuthService,
+              ) { }
 
   @Input()
   eventId: number;
   event: Event;
   sub: any;
+  myEventPlayer: EventPlayer;
 
   faTrophy = faTrophy;
 
@@ -78,6 +82,60 @@ export class EventdetailsComponent implements OnInit {
     }).valueChanges.subscribe(({data}) => {
       console.log(data);
       this.event = data.event;
+      this.myEventPlayer = null;
+      if (this.authSvc.isUserLoggedIn) {
+        for (const eventPlayer of this.event.eventplayerSet) {
+          console.log(eventPlayer);
+          console.log(eventPlayer.player.id);
+          console.log(this.authSvc.profileId);
+          if (eventPlayer.player.id == this.authSvc.profileId) {
+            console.log('Match');
+            this.myEventPlayer = eventPlayer;
+          }
+        }
+      }
+      if (this.myEventPlayer == null) {
+        this.myEventPlayer = new EventPlayer();
+        this.myEventPlayer.attendance = 'NA';
+        this.event.eventplayerSet.push(this.myEventPlayer);
+      }
+    });
+  }
+
+  setAttendance(attendance) {
+    const UpdateEventAttendance = gql`
+      mutation UpdateEventAttendance($eventId: Int!, $attendance: String!) {
+        updateEventAttendance(eventId: $eventId, attendance: $attendance) {
+          eventPlayer {
+            id
+            attendance
+            player {
+              id
+              nickname
+            }
+          }
+        }
+      }
+    `;
+
+    interface UpdateEventAttendance {
+      eventPlayer: EventPlayer;
+    }
+    interface Response {
+      updateEventAttendance: UpdateEventAttendance;
+    }
+
+    console.log('Set my attendance to ' + attendance);
+    this.apollo.mutate<Response>({
+      mutation: UpdateEventAttendance,
+      variables: {
+        eventId: this.eventId,
+        attendance: attendance,
+      }
+    }).subscribe(({data}) => {
+      console.log(data);
+      this.myEventPlayer = data.updateEventAttendance.eventPlayer;
+      console.log(data.updateEventAttendance.eventPlayer);
     });
   }
 
@@ -96,11 +154,12 @@ export class EventdetailsComponent implements OnInit {
   }
 
   isPastYear() {
-    const today = new Date();
-    const eventDate = new Date(this.event.date);
-    console.log(today);
-    console.log(eventDate);
-    return eventDate.getFullYear() < today.getFullYear();
+    if (this.event) {
+      const today = new Date();
+      const eventDate = new Date(this.event.date);
+      return eventDate.getFullYear() < today.getFullYear();
+    }
+    return false;
   }
 
   comparePosition(player1, player2) {
@@ -121,4 +180,5 @@ export class EventdetailsComponent implements OnInit {
     console.log(sorted);
     return sorted;
   }
+
 }
