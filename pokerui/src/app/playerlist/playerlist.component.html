@@ -1,0 +1,9 @@
+<div>
+  <div class="row">
+    <div class="col-12 col-lg-6" *ngFor="let player of players">
+      <p>{{player.nickname}}</p>
+      <img *ngIf="player.hasAvatar" style="height:35px;width=35px;border-radius: 50%;max-height:100%;max-width:100%" src="/views/avatar/{{player.id}}/">
+    </div>
+  </div>
+</div>
+q

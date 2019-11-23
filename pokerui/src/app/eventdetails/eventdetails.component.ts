@@ -70,6 +70,15 @@ export class EventdetailsComponent implements OnInit {
                 rebuys
               }
             }
+            eventchatmessageSet {
+              id
+              fromPlayer {
+                id
+                nickname
+              }
+              sendDate
+              text      
+            }
           }
         }
       `;

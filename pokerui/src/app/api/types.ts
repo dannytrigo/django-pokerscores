@@ -13,12 +13,25 @@ export interface Event {
   gameSet: Game[];
   maxPlayers: number;
   minPlayers: number;
+  eventchatmessageSet: EventChatMessage[];
 }
 
 export class EventPlayer {
   id: number;
   player: Person;
   attendance: string;
+}
+
+export class EventChatMessage {
+  id: number;
+  event: Event;
+  fromPlayer: Person;
+  sendDate: Date;
+  text: string;
+
+  //getSendDate() {
+  //  return new Date(this.sendDate);
+  //}
 }
 
 export interface Game {

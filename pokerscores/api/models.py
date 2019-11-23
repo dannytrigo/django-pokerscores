@@ -58,6 +58,13 @@ class Event(models.Model):
         return str('%s : %s' % (str(self.date), str(self.host)))
 
 
+class EventChatMessage(models.Model):
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    fromPlayer = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    send_date = models.DateTimeField(auto_now_add=True)
+    text = models.TextField()
+
+
 class EventPlayer(models.Model):
     AttendanceChoices = [
         ('NA', "No response"),

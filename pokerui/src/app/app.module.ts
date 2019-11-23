@@ -13,6 +13,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { EventoverviewComponent } from './eventoverview/eventoverview.component';
 import { EventdetailsComponent } from './eventdetails/eventdetails.component';
 import { PlayerdetailsComponent } from './playerdetails/playerdetails.component';
+import { PlayerlistComponent } from './playerlist/playerlist.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { PlayerdetailsComponent } from './playerdetails/playerdetails.component'
     EventlistComponent,
     EventoverviewComponent,
     EventdetailsComponent,
-    PlayerdetailsComponent
+    PlayerdetailsComponent,
+    PlayerlistComponent
   ],
   imports: [
     BrowserModule,

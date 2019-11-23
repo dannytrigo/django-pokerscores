@@ -1,6 +1,6 @@
 import graphene
 from graphene_django.types import DjangoObjectType, ObjectType
-from .models import League, Profile, User, Event, EventPlayer, Game, GamePlayer
+from .models import League, Profile, User, Event, EventChatMessage, EventPlayer, Game, GamePlayer
 
 
 class LeagueType(DjangoObjectType):
@@ -10,6 +10,7 @@ class LeagueType(DjangoObjectType):
 
 class ProfileType(DjangoObjectType):
     has_avatar = graphene.Boolean(source='has_avatar')
+
     class Meta:
         model = Profile
         exclude = ('avatar', )
@@ -25,9 +26,15 @@ class EventType(DjangoObjectType):
         model = Event
 
 
+class EventChatMessageType(DjangoObjectType):
+    class Meta:
+        model = EventChatMessage
+
+
 class EventPlayerType(DjangoObjectType):
     class Meta:
         model = EventPlayer
+
 
 class GameType(DjangoObjectType):
     class Meta:

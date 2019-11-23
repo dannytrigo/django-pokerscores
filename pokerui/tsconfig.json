@@ -2,7 +2,7 @@
   "compileOnSave": false,
   "compilerOptions": {
     "baseUrl": "./",
-    "outDir": "./dist/out-tsc",
+    "outDir": "./build/ang",
     "sourceMap": true,
     "declaration": false,
     "downlevelIteration": true,
@@ -23,8 +23,5 @@
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true
-  },
-  "exclude": [
-    "**/src/app/navbar/*"
-  ]
+  }
 }

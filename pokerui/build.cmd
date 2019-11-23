@@ -1,1 +1,1 @@
-ng build --watch --output-hashing none --output-path .\build\ang --prod
+ng build --watch  --output-path .\build\ang --prod
