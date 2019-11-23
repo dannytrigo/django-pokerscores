@@ -53,6 +53,9 @@ class Event(models.Model):
     status = models.CharField(max_length=2, choices=EventStatusChoices)
     min_players = models.IntegerField(default=3)
     max_players = models.IntegerField(default=9)
+    high_hand_stake = models.IntegerField(null=True, blank=True)
+    high_hand_winner = models.ForeignKey(Profile, on_delete=models.CASCADE, null=True, blank=True, related_name='high_hand_wins')
+    high_hand = models.CharField(max_length=50, null=True, blank=True)
 
     def __str__(self):
         return str('%s : %s' % (str(self.date), str(self.host)))
@@ -79,6 +82,8 @@ class EventPlayer(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     player = models.ForeignKey(Profile, on_delete=models.CASCADE)
     attendance = models.CharField(max_length=2, choices=AttendanceChoices)
+    high_hand_stake = models.BooleanField(null=True, blank=True)
+    high_hand_winnings = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
         return "(%s) %s" % (self.event, self.player.nickname)
