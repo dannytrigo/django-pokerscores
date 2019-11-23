@@ -165,7 +165,7 @@ class UpdateEventAttendance(graphene.Mutation):
             try:
                 ep = EventPlayer.objects.get(event=event, player=info.context.user.profile)
             except EventPlayer.DoesNotExist:
-                ep = EventPlayer(event__id=event, player=info.context.user.profile)
+                ep = EventPlayer(event=event, player=info.context.user.profile)
             ep.attendance = attendance
             ep.save()
             return UpdateEventAttendance(eventPlayer=ep)
