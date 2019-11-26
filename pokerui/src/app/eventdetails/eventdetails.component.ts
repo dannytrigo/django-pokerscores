@@ -5,7 +5,8 @@ import {ActivatedRoute} from '@angular/router';
 import {Apollo} from 'apollo-angular';
 
 import { faTrophy } from '@fortawesome/free-solid-svg-icons';
-import {AuthService} from "../auth.service";
+import {AuthService} from '../auth.service';
+import {PokerCard, PokerHand} from '../pokerhand/pokerhand.component';
 
 @Component({
   selector: 'app-eventdetails',
@@ -43,6 +44,11 @@ export class EventdetailsComponent implements OnInit {
             id
             date
             status
+            highHand
+            highHandWinner {
+              id
+              nickname
+            }
             host {
               id
               nickname
@@ -77,7 +83,7 @@ export class EventdetailsComponent implements OnInit {
                 nickname
               }
               sendDate
-              text      
+              text
             }
           }
         }
@@ -190,4 +196,24 @@ export class EventdetailsComponent implements OnInit {
     return sorted;
   }
 
+  getHighHand() {
+    if (this.event && this.event.highHand) {
+      const hand = new PokerHand();
+      for (let i = 0; i < 5; i++) {
+        const cardstr = this.event.highHand.substring(i * 2, (i * 2) + 2);
+        const cardval = cardstr[0];
+        let cardvalnum: number;
+        const cardsuit = cardstr[1];
+        if (cardval === 'A') { cardvalnum = 1; }
+        if (cardval === 'J') { cardvalnum = 11; }
+        if (cardval === 'Q') { cardvalnum = 12; }
+        if (cardval === 'K') { cardvalnum = 13; }
+        if (cardval >= '1' && cardval <= '9') { cardvalnum = Number(cardval); }
+        const pokerCard = new PokerCard(cardsuit, cardvalnum);
+        hand.cards.push(pokerCard);
+      }
+      return hand;
+    }
+    return null;
+  }
 }

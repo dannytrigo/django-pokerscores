@@ -20,7 +20,9 @@
     <div class="col">
       <div class="row">
         <div class="col">Host: {{ event?.host.nickname }}</div>
-        <div class="col">Status: {{ status_text(event?.status) }}</div>
+        <div class="col">
+          <p>Status: {{ status_text(event?.status) }}</p>
+        </div>
       </div>
       <div class="row">
         <div class="col">
@@ -32,6 +34,9 @@
               </div>
             </div>
           </div>
+        </div>
+        <div class="col">
+        <p *ngIf="event?.highHand">High Hand Winner: {{ event?.highHandWinner.nickname }}<app-pokerhand [pokerHand]="getHighHand()"></app-pokerhand></p>
         </div>
         <!--<div class="col">Interested: ...</div>-->
       </div>

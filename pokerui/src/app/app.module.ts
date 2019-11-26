@@ -14,17 +14,19 @@ import { EventoverviewComponent } from './eventoverview/eventoverview.component'
 import { EventdetailsComponent } from './eventdetails/eventdetails.component';
 import { PlayerdetailsComponent } from './playerdetails/playerdetails.component';
 import { PlayerlistComponent } from './playerlist/playerlist.component';
+import {PokerhandComponent} from "./pokerhand/pokerhand.component";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    EventlistComponent,
-    EventoverviewComponent,
-    EventdetailsComponent,
-    PlayerdetailsComponent,
-    PlayerlistComponent
-  ],
+    declarations: [
+        AppComponent,
+        NavbarComponent,
+        EventlistComponent,
+        EventoverviewComponent,
+        EventdetailsComponent,
+        PlayerdetailsComponent,
+        PlayerlistComponent,
+        PokerhandComponent
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

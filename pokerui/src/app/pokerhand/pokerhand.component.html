@@ -1,0 +1,46 @@
+<div *ngIf="pokerHand && pokerHand.cards">
+  <svg
+    width="90"
+    height="80"
+    xmlns="http://www.w3.org/2000/svg"
+    xmlns:xlink="http://www.w3.org/1999/xlink"
+  >
+
+  <!-- The cards have a natural width of 169.075 and a height of 244.640. It
+       center is located at (+98.0375, +122.320). -->
+  <!-- The original back color was #0062ff. The color of the back card can
+       be changed by setting the fill on the USE-element. -->
+  <!--
+  <g transform="translate(10,0)">
+    <use xlink:href="static/svg-cards-indented.svg#club_jack" x="0" y="0" transform="rotate(10) scale(0.25)"/>
+  </g>
+  <g transform="translate(20,0)">
+    <use xlink:href="static/svg-cards-indented.svg#heart_jack" x="0" y="0" transform="rotate(15) scale(0.25)"/>
+  </g>
+  <g transform="translate(30,0)">
+    <use xlink:href="static/svg-cards-indented.svg#diamond_jack" x="0" y="0" transform="rotate(20) scale(0.25)"/>
+  </g>
+  <g transform="translate(40,0)">
+    <use xlink:href="static/svg-cards-indented.svg#heart_5" x="0" y="0" transform="rotate(25) scale(0.25)"/>
+  </g>
+  <g transform="translate(50,0)">
+    <use xlink:href="static/svg-cards-indented.svg#spade_5" x="0" y="0" transform="rotate(30) scale(0.25)"/>
+  </g>
+  -->
+    <g transform="translate(10,0)">
+      <use [attr.xlink:href]="'static/svg-cards-indented.svg#'+getCardSvg(pokerHand.cards[0])" x="0" y="0" transform="rotate(10) scale(0.25)"/>
+    </g>
+    <g transform="translate(20,0)">
+      <use [attr.xlink:href]="'static/svg-cards-indented.svg#'+getCardSvg(pokerHand.cards[1])" x="0" y="0" transform="rotate(15) scale(0.25)"/>
+    </g>
+    <g transform="translate(30,0)">
+      <use [attr.xlink:href]="'static/svg-cards-indented.svg#'+getCardSvg(pokerHand.cards[2])" x="0" y="0" transform="rotate(20) scale(0.25)"/>
+    </g>
+    <g transform="translate(40,0)">
+      <use [attr.xlink:href]="'static/svg-cards-indented.svg#'+getCardSvg(pokerHand.cards[3])" x="0" y="0" transform="rotate(25) scale(0.25)"/>
+    </g>
+    <g transform="translate(50,0)">
+      <use [attr.xlink:href]="'static/svg-cards-indented.svg#'+getCardSvg(pokerHand.cards[4])" x="0" y="0" transform="rotate(30) scale(0.25)"/>
+    </g>
+  </svg>
+</div>

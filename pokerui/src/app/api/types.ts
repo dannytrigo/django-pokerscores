@@ -14,6 +14,8 @@ export interface Event {
   maxPlayers: number;
   minPlayers: number;
   eventchatmessageSet: EventChatMessage[];
+  highHand: string;
+  highHandWinner: Person;
 }
 
 export class EventPlayer {
