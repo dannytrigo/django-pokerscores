@@ -10,24 +10,24 @@
 </div>
 <div class="row">
   <div class="col-2 align-items-center">
-    <span title="{{ event.date }}">
-      <span style="display:block; text-align:center; color:#fa3e3e">{{ event.date | date:'MMM' | uppercase }}</span>
-      <span style="display:block; text-align:center">{{ event.date | date:'d' }} </span>
-      <span style="display:block; text-align:center" *ngIf="isPastYear()">{{ event.date | date: 'yyyy' }}</span>
+    <span title="{{ event?.date }}">
+      <span style="display:block; text-align:center; color:#fa3e3e">{{ event?.date | date:'MMM' | uppercase }}</span>
+      <span style="display:block; text-align:center">{{ event?.date | date:'d' }} </span>
+      <span style="display:block; text-align:center" *ngIf="isPastYear()">{{ event?.date | date: 'yyyy' }}</span>
     </span>
   </div>
   <div class="col-10">
     <div class="col">
       <div class="row">
-        <div class="col">Host: {{ event.host.nickname }}</div>
-        <div class="col">Status: {{ status_text(event.status) }}</div>
+        <div class="col">Host: {{ event?.host.nickname }}</div>
+        <div class="col">Status: {{ status_text(event?.status) }}</div>
       </div>
       <div class="row">
         <div class="col">
           <div ngbDropdown class="d-inline-block">
-            Players: <button class="btn btn-outline-primary" id="dropdownAttendingList" ngbDropdownToggle>{{filter_players(['AT', 'AD'], event.eventplayerSet)?.length}} players</button>
+            Players: <button class="btn btn-outline-primary" id="dropdownAttendingList" ngbDropdownToggle>{{filter_players(['AT', 'AD'], event?.eventplayerSet)?.length}} players</button>
             <div ngbDropdownMenu aria-labelledby="dropdownAttendingList">
-              <div *ngFor="let player of filter_players(['AT', 'AD'], event.eventplayerSet)">
+              <div *ngFor="let player of filter_players(['AT', 'AD'], event?.eventplayerSet)">
                 <button ngbDropdownItem *ngIf="['AT', 'AD'].includes(player.attendance)" routerLink="/profile/{{player.player.id}}">{{player.player.nickname}}</button>
               </div>
             </div>
@@ -75,13 +75,13 @@
   </div>
 </div>
 -->
-<div *ngIf="event.gameSet.length > 0" class="row">
+<div *ngIf="event?.gameSet.length > 0" class="row">
   <div class="col">
     <h2>Games</h2>
   </div>
 </div>
 <div class="row">
-  <div class="col-12 col-lg-6" *ngFor="let game of event.gameSet">
+  <div class="col-12 col-lg-6" *ngFor="let game of event?.gameSet">
     <div class="row">
       <div class="col">
         <h4># {{ game.number}}</h4>
