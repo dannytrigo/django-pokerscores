@@ -82,7 +82,7 @@ class EventPlayer(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE)
     player = models.ForeignKey(Profile, on_delete=models.CASCADE)
     attendance = models.CharField(max_length=2, choices=AttendanceChoices)
-    high_hand_stake = models.BooleanField(null=True, blank=True)
+    high_hand_stake = models.BooleanField(default=False)
     high_hand_winnings = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
